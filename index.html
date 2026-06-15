@@ -133,7 +133,7 @@ section{position:relative;padding:70px 22px;max-width:560px;margin:0 auto}
 <section class="hero">
   <div class="pre">23 · June · 1998</div>
   <h1>Happy Birthday,<br>Aqilah 🌸</h1>
-  <div class="date">Another trip around the sun for our favourite <span>28-year-old</span> fabulous celebrity 💅🌈</div>
+  <div class="date">Another trip around the sun for our favourite <span>28-year-old</span> celebrity 💅🌈</div>
   <div class="flower-divider">🌷 🌸 💐</div>
   <div class="scroll">Begin the journey ↓</div>
 </section>
@@ -189,6 +189,7 @@ section{position:relative;padding:70px 22px;max-width:560px;margin:0 auto}
       <button data-dir="right">▶</button>
     </div>
   </div>
+  <button class="btn" id="reset-btn" style="width:auto;padding:11px 28px;font-size:.9rem;margin:14px auto 0;display:block;background:linear-gradient(90deg,#d9a8e0,#b8c0ec)">↺ Reset game</button>
 </section>
 
 <!-- FINALE -->
@@ -353,7 +354,7 @@ document.addEventListener('click',(e)=>{
   headImg.crossOrigin='anonymous';
   headImg.onload=()=>headReady=true;
   headImg.onerror=()=>headReady=false;
-  headImg.src='https://i.postimg.cc/CM3WTHzT/Whats-App-Image-2026-06-15-at-11-25-55-PM.jpg';
+  headImg.src='https://i.postimg.cc/JhLCW30M/Whats-App-Image-2026-06-16-at-12-52-05-AM.jpg';
 
   function reset(){
     snake=[{x:8,y:8},{x:7,y:8},{x:6,y:8}];
@@ -394,6 +395,7 @@ document.addEventListener('click',(e)=>{
     });
   }
   function step(){
+    if(!running)return;
     dir=nextDir;
     const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
     // wall collision
@@ -409,7 +411,9 @@ document.addEventListener('click',(e)=>{
     draw();
   }
   function gameOver(){
-    running=false;clearInterval(loopId);
+    running=false;
+    clearInterval(loopId);
+    loopId=null;
     document.getElementById('final-score').textContent=score;
     document.getElementById('go-msg').innerHTML=score>=10
       ? `Whoa, ${score} treats! You\'re unstoppable 🍰`
@@ -420,7 +424,7 @@ document.addEventListener('click',(e)=>{
     reset();running=true;draw();
     document.getElementById('start-btn').style.display='none';
     document.getElementById('game-over').style.display='none';
-    clearInterval(loopId);loopId=setInterval(step,160);
+    clearInterval(loopId);loopId=setInterval(step,270);
   }
   function setDir(d){
     if(!running)return;
@@ -431,6 +435,7 @@ document.addEventListener('click',(e)=>{
   }
   document.getElementById('start-btn').onclick=start;
   document.getElementById('restart-btn').onclick=start;
+  document.getElementById('reset-btn').onclick=start;
   document.querySelectorAll('.game-controls button').forEach(b=>{
     b.onclick=()=>setDir(b.dataset.dir);
   });
