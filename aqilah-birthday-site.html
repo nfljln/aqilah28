@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Aqilah 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Quicksand',sans-serif;background:linear-gradient(170deg,#fdf0f6 0%,#f3eafc 35%,#fdeef3 70%,#f0ecfc 100%);color:#6b5876;overflow-x:hidden}
+h1,h2,.script{font-family:'Dancing Script',cursive}
+section{position:relative;padding:70px 22px;max-width:560px;margin:0 auto}
+.sec-title{font-size:2.4rem;text-align:center;color:#c474a8;margin-bottom:8px}
+.sec-sub{text-align:center;font-size:.92rem;color:#a48bb8;margin-bottom:30px}
+
+/* petals */
+#petals{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.petal{position:absolute;top:-30px;border-radius:60% 0 60% 0;opacity:.8;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(640deg) translateX(40px);opacity:.3}}
+
+/* hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:30px 22px}
+.hero .pre{letter-spacing:4px;text-transform:uppercase;font-size:.8rem;color:#bf90c9;animation:fadeUp 1.2s ease both}
+.hero h1{font-size:clamp(3rem,13vw,5rem);line-height:1.1;background:linear-gradient(90deg,#e893bd,#b58ae0,#e893bd);background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:fadeUp 1.2s .3s ease both,shimmer 6s linear infinite;margin:14px 0}
+@keyframes shimmer{to{background-position:200%}}
+.hero .date{font-size:1.05rem;color:#9d7fb5;animation:fadeUp 1.2s .6s ease both}
+.hero .date span{color:#d985b3;font-weight:700}
+.hero .scroll{margin-top:56px;font-size:.9rem;color:#bb9ed1;animation:fadeUp 1.2s 1s ease both, bob 2s 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.flower-divider{font-size:1.6rem;letter-spacing:12px;animation:fadeUp 1.2s .8s ease both}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(34px);transition:all .9s cubic-bezier(.2,.7,.3,1)}
+.reveal.show{opacity:1;transform:none}
+
+/* countdown */
+.count-wrap{display:flex;gap:10px;justify-content:center;margin-bottom:14px}
+.count-box{background:rgba(255,255,255,.65);backdrop-filter:blur(8px);border:1px solid rgba(230,170,210,.4);border-radius:18px;padding:14px 6px;width:72px;text-align:center;box-shadow:0 8px 24px rgba(200,140,190,.15)}
+.count-box .num{font-size:1.7rem;font-weight:700;color:#c970a8}
+.count-box .lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:1px;color:#a98cc0}
+#celebrate-msg{text-align:center;font-size:1.5rem;color:#c970a8;display:none;margin-bottom:10px}
+
+/* timeline */
+.timeline{margin-top:34px;position:relative;padding-left:26px}
+.timeline:before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(#eebbd9,#c9aef0)}
+.tl-item{position:relative;margin-bottom:26px}
+.tl-item:before{content:"🌸";position:absolute;left:-30px;top:-2px;font-size:.95rem}
+.tl-item .tl-title{font-weight:700;color:#bd6fa4;font-size:1rem}
+.tl-item .tl-text{font-size:.9rem;color:#8d75a3;margin-top:2px}
+
+/* letter */
+.letter{background:linear-gradient(160deg,#fff8fb,#fbf3ff);border:1px solid #f0d4e8;border-radius:24px;padding:34px 26px;box-shadow:0 14px 40px rgba(190,130,190,.18);position:relative}
+.letter:before{content:"💐";position:absolute;top:-16px;left:18px;font-size:1.6rem}
+.letter:after{content:"🌷";position:absolute;bottom:-14px;right:18px;font-size:1.6rem}
+.letter p{font-size:1rem;line-height:1.8;color:#7c6490;margin-bottom:16px}
+.letter .sign{font-family:'Dancing Script',cursive;font-size:1.7rem;color:#c474a8;text-align:right}
+
+/* gallery */
+.gallery{display:flex;gap:18px;overflow-x:auto;padding:16px 4px 26px;scroll-snap-type:x mandatory}
+.gallery::-webkit-scrollbar{display:none}
+.polaroid{flex:0 0 200px;scroll-snap-align:center;background:#fff;padding:10px 10px 16px;border-radius:6px;box-shadow:0 10px 26px rgba(170,120,180,.22);transform:rotate(-2.5deg);transition:transform .3s}
+.polaroid:nth-child(even){transform:rotate(2.5deg)}
+.polaroid:active{transform:scale(.97) rotate(0)}
+.polaroid .ph{height:190px;width:100%;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:3rem;color:#fff;object-fit:cover}
+.polaroid .cap{text-align:center;font-size:.85rem;margin-top:10px;color:#8d75a3;font-weight:600}
+.swipe-hint{text-align:center;font-size:.78rem;color:#bb9ed1}
+
+/* garden game */
+.garden{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px}
+.flower-btn{aspect-ratio:1;border:none;background:rgba(255,255,255,.6);border:1px solid rgba(230,170,210,.45);border-radius:22px;font-size:2.3rem;cursor:pointer;transition:transform .25s, box-shadow .25s;box-shadow:0 6px 18px rgba(200,140,190,.14)}
+.flower-btn:active{transform:scale(.9)}
+.flower-btn.bloomed{animation:bloom .6s ease}
+@keyframes bloom{0%{transform:scale(.6) rotate(-20deg)}60%{transform:scale(1.25) rotate(8deg)}100%{transform:scale(1)}}
+.flower-msg{margin-top:18px;min-height:64px;background:rgba(255,255,255,.7);border-radius:18px;padding:16px 18px;text-align:center;font-size:.95rem;color:#9b6cae;font-weight:600;border:1px dashed #e3b9d8;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+
+/* wishes */
+.wish-form{background:rgba(255,255,255,.65);backdrop-filter:blur(8px);border-radius:22px;padding:20px;border:1px solid rgba(230,170,210,.4);box-shadow:0 10px 30px rgba(200,140,190,.14)}
+.wish-form input,.wish-form textarea{width:100%;border:1.5px solid #ecd2e6;border-radius:14px;padding:13px 15px;font-family:inherit;font-size:.95rem;color:#6b5876;background:#fffafe;margin-bottom:12px;outline:none;transition:border .2s}
+.wish-form input:focus,.wish-form textarea:focus{border-color:#d99cc6}
+.wish-form textarea{resize:none;height:88px}
+.btn{display:inline-block;width:100%;border:none;border-radius:16px;padding:15px;font-family:inherit;font-size:1rem;font-weight:700;color:#fff;background:linear-gradient(90deg,#ec9ec7,#b990e8);cursor:pointer;box-shadow:0 8px 22px rgba(200,120,190,.35);transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.6}
+#wish-status{text-align:center;font-size:.85rem;margin-top:10px;color:#b083c6;min-height:1.2em}
+.wish-cards{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+.wish-card{background:linear-gradient(135deg,#fff6fb,#f7f0ff);border:1px solid #f0d4ea;border-radius:18px;padding:16px 18px;box-shadow:0 6px 18px rgba(190,130,190,.12);animation:fadeUp .6s ease both}
+.wish-card .who{font-weight:700;color:#c06ba2;font-size:.92rem;margin-bottom:4px}
+.wish-card .what{font-size:.92rem;color:#82689a;line-height:1.5}
+.wish-card .flower-ico{float:right;font-size:1.1rem}
+
+/* finale */
+.finale{text-align:center;padding-bottom:110px}
+.finale h2{font-size:2.6rem;color:#c474a8;margin-bottom:14px}
+.finale p{color:#9d7fb5;margin-bottom:30px;font-size:1rem}
+#wish-btn{width:auto;padding:18px 44px;font-size:1.15rem;border-radius:40px}
+#final-love{margin-top:34px;font-family:'Dancing Script',cursive;font-size:2rem;color:#c06ba2;opacity:0;transition:opacity 1.2s}
+#final-love.show{opacity:1}
+#cake{font-size:5rem;cursor:pointer;display:inline-block;position:relative;transition:transform .15s;user-select:none}
+#cake:active{transform:scale(.92)}
+#flames{position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-size:1.1rem;transition:opacity .4s,transform .4s}
+#flames.out{opacity:0;transform:translateX(-50%) translateY(-14px)}
+
+/* modal */
+#modal{position:fixed;inset:0;background:rgba(60,30,70,.55);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:60;padding:30px}
+#modal .inner{background:#fff;padding:14px 14px 22px;border-radius:8px;max-width:340px;width:100%;text-align:center;animation:bloom .4s ease}
+#modal .ph{height:300px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:5rem;color:#fff}
+#modal .cap{margin-top:12px;color:#8d75a3;font-weight:600}
+
+/* confetti canvas */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+</style>
+</head>
+<body>
+<div id="petals"></div>
+<canvas id="confetti"></canvas>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="pre">23 · June · 1998</div>
+  <h1>Happy Birthday,<br>Aqilah 🌸</h1>
+  <div class="date">Another trip around the sun for our favourite <span>28-year-old</span> fabulous celebrity 💅🌈</div>
+  <div class="flower-divider">🌷 🌸 💐</div>
+  <div class="scroll">Begin the journey ↓</div>
+</section>
+
+<!-- COUNTDOWN + TIMELINE -->
+<section class="reveal">
+  <h2 class="sec-title">Counting Down</h2>
+  <p class="sec-sub">to your special day, 23 June</p>
+  <div id="celebrate-msg" class="script">🎉 It's your day, my love! 🎉</div>
+  <div class="count-wrap" id="count-wrap">
+    <div class="count-box"><div class="num" id="d">0</div><div class="lbl">days</div></div>
+    <div class="count-box"><div class="num" id="h">0</div><div class="lbl">hours</div></div>
+    <div class="count-box"><div class="num" id="m">0</div><div class="lbl">mins</div></div>
+    <div class="count-box"><div class="num" id="s">0</div><div class="lbl">secs</div></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="reveal">
+  <h2 class="sec-title">A Qilo of Sugar</h2>
+  <p class="sec-sub">little moments, big love</p>
+  <div class="gallery" id="gallery"></div>
+  <div class="swipe-hint">← swipe to see more →</div>
+</section>
+
+<!-- GARDEN GAME -->
+<section class="reveal">
+  <h2 class="sec-title">Pick a Flower</h2>
+  <p class="sec-sub">each one holds a little secret 💌</p>
+  <div class="garden" id="garden"></div>
+  <div class="flower-msg" id="flower-msg">Tap a flower to bloom it open…</div>
+</section>
+
+<!-- WISHES -->
+<section class="reveal">
+  <h2 class="sec-title">Birthday Wishes</h2>
+  <p class="sec-sub">leave a wish for Aqilah — everyone can see them 💕</p>
+  <div class="wish-form">
+    <input id="wish-name" maxlength="40" placeholder="Your name">
+    <textarea id="wish-text" maxlength="280" placeholder="Write your birthday wish for Aqilah…"></textarea>
+    <button class="btn" id="wish-submit">Send wish 🌷</button>
+    <div id="wish-status"></div>
+  </div>
+  <div class="wish-cards" id="wish-cards"><p style="text-align:center;color:#bb9ed1;font-size:.9rem">Loading wishes…</p></div>
+</section>
+
+<!-- FINALE -->
+<section class="finale reveal">
+  <h2>Blow Out the Candles</h2>
+  <p>Make a wish, then tap the cake to blow them out 🎂</p>
+  <div id="cake">🎂<div id="flames">🔥🔥🔥</div></div>
+  <div id="final-love">Happy 28th Birthday,<br>Aqilah! 🌸</div>
+</section>
+
+<!-- modal -->
+<div id="modal"><div class="inner"><div class="ph" id="modal-ph"></div><div class="cap" id="modal-cap"></div></div></div>
+
+<script>
+/* ---------- falling petals ---------- */
+const petalColors=['#f7c6de','#e8c8f5','#fbd9e8','#d9c6f2','#fce4ef'];
+const petalLayer=document.getElementById('petals');
+function spawnPetal(){
+  const p=document.createElement('div');p.className='petal';
+  const s=8+Math.random()*12;
+  p.style.width=s+'px';p.style.height=s+'px';
+  p.style.left=Math.random()*100+'vw';
+  p.style.background=petalColors[Math.floor(Math.random()*petalColors.length)];
+  p.style.animationDuration=(7+Math.random()*8)+'s';
+  petalLayer.appendChild(p);
+  setTimeout(()=>p.remove(),16000);
+}
+setInterval(spawnPetal,650);for(let i=0;i<8;i++)setTimeout(spawnPetal,i*300);
+
+/* ---------- reveal on scroll ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- countdown ---------- */
+function nextBirthday(){
+  const now=new Date();let y=now.getFullYear();
+  let bd=new Date(y,5,23,0,0,0);
+  if(now>new Date(y,5,24,0,0,0))bd=new Date(y+1,5,23,0,0,0);
+  return bd;
+}
+function tick(){
+  const now=new Date(),bd=nextBirthday();
+  const isDay=now.getMonth()===5&&now.getDate()===23;
+  document.getElementById('celebrate-msg').style.display=isDay?'block':'none';
+  document.getElementById('count-wrap').style.display=isDay?'none':'flex';
+  if(isDay)return;
+  let diff=Math.max(0,bd-now);
+  const d=Math.floor(diff/864e5);diff%=864e5;
+  const h=Math.floor(diff/36e5);diff%=36e5;
+  const m=Math.floor(diff/6e4);
+  const s=Math.floor(diff%6e4/1e3);
+  document.getElementById('d').textContent=d;
+  document.getElementById('h').textContent=h;
+  document.getElementById('m').textContent=m;
+  document.getElementById('s').textContent=s;
+}
+tick();setInterval(tick,1000);
+
+/* ---------- gallery ---------- */
+const photos=[
+  {img:'https://i.postimg.cc/CM3WTHzT/Whats-App-Image-2026-06-15-at-11-25-55-PM.jpg',g:'linear-gradient(135deg,#f6a8cc,#c79bf0)',c:'Warning: dangerously cute'},
+  {e:'🌅',g:'linear-gradient(135deg,#fbc2a4,#f6a8cc)',c:'Sweeter than dessert (and that\'s saying a lot)'},
+  {e:'💍',g:'linear-gradient(135deg,#c79bf0,#9bb8f0)',c:'Certified the best decision I ever made'},
+  {e:'🎂',g:'linear-gradient(135deg,#f6a8cc,#fbd9a4)',c:'Aging like fine wine, but cuter'},
+  {e:'✈️',g:'linear-gradient(135deg,#9bd8f0,#c79bf0)',c:'Will travel the world for this smile'},
+  {e:'🏡',g:'linear-gradient(135deg,#b8e6c8,#9bd8f0)',c:'Home? You\'re the home.'}
+];
+const gal=document.getElementById('gallery');
+photos.forEach((p,i)=>{
+  const d=document.createElement('div');d.className='polaroid';
+  const inner=p.img?`<img class="ph" src="${p.img}" alt="${p.c}" style="object-fit:cover">`:`<div class="ph" style="background:${p.g}">${p.e}</div>`;
+  d.innerHTML=`${inner}<div class="cap">${p.c}</div>`;
+  d.onclick=()=>{
+    const mph=document.getElementById('modal-ph');
+    if(p.img){mph.style.background='none';mph.innerHTML=`<img src="${p.img}" alt="${p.c}" style="width:100%;height:100%;object-fit:cover;border-radius:6px">`;}
+    else{mph.style.background=p.g;mph.textContent=p.e;}
+    document.getElementById('modal-cap').textContent=p.c;
+    document.getElementById('modal').style.display='flex';};
+  gal.appendChild(d);
+});
+document.getElementById('modal').onclick=()=>document.getElementById('modal').style.display='none';
+
+/* ---------- flower game ---------- */
+const flowers=[
+  {ico:'🍜',msg:'Aqilah is a certified foodie — will travel for a good meal.'},
+  {ico:'📸',msg:'Aqilah secretly hates how much she loves Instagram. 😅'},
+  {ico:'🍰',msg:'Aqilah has a sweet tooth that knows no limits.'},
+  {ico:'✈️',msg:'Aqilah lives for travelling and chasing new places.'},
+  {ico:'🌸',msg:'Aqilah loves flowers (which is why this site is full of them).'},
+  {ico:'💗',msg:'Aqilah\'s favourite colour is pink — obviously the best colour.'}
+];
+const garden=document.getElementById('garden');
+const fm=document.getElementById('flower-msg');
+flowers.forEach(f=>{
+  const b=document.createElement('button');b.className='flower-btn';b.textContent='🌱';
+  let opened=false;
+  b.onclick=()=>{
+    b.classList.remove('bloomed');void b.offsetWidth;b.classList.add('bloomed');
+    b.textContent=f.ico;opened=true;
+    fm.style.opacity=0;
+    setTimeout(()=>{fm.textContent=f.msg;fm.style.opacity=1;},250);
+    burst(0.4,b.getBoundingClientRect());
+  };
+  garden.appendChild(b);
+});
+
+/* ---------- confetti ---------- */
+const cv=document.getElementById('confetti'),ctx=cv.getContext('2d');
+let parts=[];
+function sizeCv(){cv.width=innerWidth;cv.height=innerHeight}
+sizeCv();addEventListener('resize',sizeCv);
+const confColors=['#f48fb1','#ce93d8','#f8bbd0','#b39ddb','#ffe0ec','#fff3b0'];
+function burst(power,rect){
+  const cx=rect?rect.left+rect.width/2:innerWidth/2;
+  const cy=rect?rect.top+rect.height/2:innerHeight/2;
+  const n=Math.floor(120*power);
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2,v=3+Math.random()*7*power*2;
+    parts.push({x:cx,y:cy,vx:Math.cos(a)*v,vy:Math.sin(a)*v-3,s:4+Math.random()*6,
+      c:confColors[Math.floor(Math.random()*confColors.length)],r:Math.random()*Math.PI,vr:(Math.random()-.5)*.3,life:90+Math.random()*60});
+  }
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  parts=parts.filter(p=>p.life>0);
+  parts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.16;p.r+=p.vr;p.life--;
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);
+    ctx.globalAlpha=Math.min(1,p.life/40);
+    ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);
+    ctx.restore();
+  });
+  requestAnimationFrame(loop);
+}
+loop();
+
+/* ---------- finale: blow out candles ---------- */
+let candlesOut=false;
+document.getElementById('cake').onclick=(e)=>{
+  if(candlesOut)return;candlesOut=true;
+  document.getElementById('flames').classList.add('out');
+  burst(1.6);
+  for(let i=0;i<26;i++)setTimeout(spawnPetal,i*60);
+  setTimeout(()=>document.getElementById('final-love').classList.add('show'),500);
+};
+
+/* ---------- tap anywhere for confetti ---------- */
+document.addEventListener('click',(e)=>{
+  if(e.target.closest('button,input,textarea,a,#cake,.polaroid,.flower-btn'))return;
+  burst(0.35,{left:e.clientX-4,top:e.clientY-4,width:8,height:8});
+});
+
+/* ---------- wishes wall (shared storage) ---------- */
+const WKEY='aqilah-birthday-wishes';
+const cards=document.getElementById('wish-cards');
+const status=document.getElementById('wish-status');
+const flowerIcos=['🌷','🌸','🌺','🌼','💐','🌻'];
+function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
+function renderWishes(list){
+  if(!list.length){cards.innerHTML='<p style="text-align:center;color:#bb9ed1;font-size:.9rem">No wishes yet — be the first! 🌷</p>';return}
+  cards.innerHTML=list.slice().reverse().map((w,i)=>
+    `<div class="wish-card" style="animation-delay:${Math.min(i*0.08,0.6)}s">
+      <span class="flower-ico">${flowerIcos[i%flowerIcos.length]}</span>
+      <div class="who">${esc(w.n)}</div><div class="what">${esc(w.t)}</div>
+    </div>`).join('');
+}
+async function loadWishes(){
+  try{
+    const r=await window.storage.get(WKEY,true);
+    renderWishes(r&&r.value?JSON.parse(r.value):[]);
+  }catch(e){renderWishes([])}
+}
+loadWishes();
+document.getElementById('wish-submit').onclick=async()=>{
+  const n=document.getElementById('wish-name').value.trim();
+  const t=document.getElementById('wish-text').value.trim();
+  if(!n||!t){status.textContent='Please add your name and a wish 💕';return}
+  const btn=document.getElementById('wish-submit');btn.disabled=true;status.textContent='Sending…';
+  try{
+    let list=[];
+    try{const r=await window.storage.get(WKEY,true);if(r&&r.value)list=JSON.parse(r.value)}catch(e){}
+    list.push({n,t,at:Date.now()});
+    if(list.length>200)list=list.slice(-200);
+    await window.storage.set(WKEY,JSON.stringify(list),true);
+    renderWishes(list);
+    document.getElementById('wish-name').value='';document.getElementById('wish-text').value='';
+    status.textContent='Wish sent! 🌸';
+    burst(0.6);
+  }catch(e){status.textContent='Could not save — please try again.'}
+  btn.disabled=false;
+  setTimeout(()=>status.textContent='',2500);
+};
+</script>
+</body>
+</html>
