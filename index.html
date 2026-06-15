@@ -92,6 +92,19 @@ section{position:relative;padding:70px 22px;max-width:560px;margin:0 auto}
 
 /* finale */
 .finale{text-align:center;padding-bottom:110px}
+
+/* snake game */
+#game-wrap{position:relative;width:320px;max-width:90vw;margin:0 auto;aspect-ratio:1}
+#snake{width:100%;height:100%;background:rgba(255,255,255,.55);border:2px solid rgba(230,170,210,.5);border-radius:20px;box-shadow:0 10px 30px rgba(200,140,190,.16);touch-action:none}
+#game-score{text-align:center;font-weight:700;color:#c06ba2;margin-bottom:12px;font-size:1.1rem}
+#start-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+#game-over{position:absolute;inset:0;background:rgba(255,250,253,.93);border-radius:20px;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center}
+#go-text{font-size:3rem}
+#go-msg{color:#9b6cae;font-weight:600}
+.game-controls{margin-top:20px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.game-controls>div{display:flex;gap:8px}
+.game-controls button{width:60px;height:52px;border:none;border-radius:14px;background:rgba(255,255,255,.7);border:1px solid rgba(230,170,210,.45);color:#c06ba2;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(200,140,190,.14)}
+.game-controls button:active{transform:scale(.9);background:#f6d6ec}
 .finale h2{font-size:2.6rem;color:#c474a8;margin-bottom:14px}
 .finale p{color:#9d7fb5;margin-bottom:30px;font-size:1rem}
 #wish-btn{width:auto;padding:18px 44px;font-size:1.15rem;border-radius:40px}
@@ -154,17 +167,28 @@ section{position:relative;padding:70px 22px;max-width:560px;margin:0 auto}
   <div class="flower-msg" id="flower-msg">Tap a flower to bloom it open…</div>
 </section>
 
-<!-- WISHES -->
+<!-- SNAKE GAME -->
 <section class="reveal">
-  <h2 class="sec-title">Birthday Wishes</h2>
-  <p class="sec-sub">leave a wish for Aqilah — everyone can see them 💕</p>
-  <div class="wish-form">
-    <input id="wish-name" maxlength="40" placeholder="Your name">
-    <textarea id="wish-text" maxlength="280" placeholder="Write your birthday wish for Aqilah…"></textarea>
-    <button class="btn" id="wish-submit">Send wish 🌷</button>
-    <div id="wish-status"></div>
+  <h2 class="sec-title">Aqilah's Sweet Tooth</h2>
+  <p class="sec-sub">help her gobble up the treats 🍦 swipe or use arrow keys</p>
+  <div id="game-wrap">
+    <div id="game-score">Score: 0</div>
+    <canvas id="snake" width="320" height="320"></canvas>
+    <div id="game-over">
+      <div id="go-text">🍰</div>
+      <div id="go-msg">Yum! Final score: <span id="final-score">0</span></div>
+      <button class="btn" id="restart-btn" style="width:auto;padding:13px 32px">Play again 🍦</button>
+    </div>
+    <button class="btn" id="start-btn" style="width:auto;padding:14px 36px">Start 🍦</button>
   </div>
-  <div class="wish-cards" id="wish-cards"><p style="text-align:center;color:#bb9ed1;font-size:.9rem">Loading wishes…</p></div>
+  <div class="game-controls" id="game-controls">
+    <button data-dir="up">▲</button>
+    <div>
+      <button data-dir="left">◀</button>
+      <button data-dir="down">▼</button>
+      <button data-dir="right">▶</button>
+    </div>
+  </div>
 </section>
 
 <!-- FINALE -->
@@ -317,7 +341,115 @@ document.addEventListener('click',(e)=>{
   burst(0.35,{left:e.clientX-4,top:e.clientY-4,width:8,height:8});
 });
 
-/* ---------- wishes wall (shared storage) ---------- */
+/* ---------- snake game ---------- */
+(function(){
+  const cv=document.getElementById('snake'),g=cv.getContext('2d');
+  const GRID=16,CELL=cv.width/GRID;
+  const treats=['🍦','🍰','🍩','🧁','🍪','🍫'];
+  let snake,dir,nextDir,food,foodEmoji,score,loopId,running=false;
+
+  // her face for the head (falls back to emoji if image blocked)
+  const headImg=new Image();let headReady=false;
+  headImg.crossOrigin='anonymous';
+  headImg.onload=()=>headReady=true;
+  headImg.onerror=()=>headReady=false;
+  headImg.src='https://i.postimg.cc/CM3WTHzT/Whats-App-Image-2026-06-15-at-11-25-55-PM.jpg';
+
+  function reset(){
+    snake=[{x:8,y:8},{x:7,y:8},{x:6,y:8}];
+    dir={x:1,y:0};nextDir={x:1,y:0};score=0;
+    document.getElementById('game-score').textContent='Score: 0';
+    placeFood();
+  }
+  function placeFood(){
+    do{food={x:Math.floor(Math.random()*GRID),y:Math.floor(Math.random()*GRID)};}
+    while(snake.some(s=>s.x===food.x&&s.y===food.y));
+    foodEmoji=treats[Math.floor(Math.random()*treats.length)];
+  }
+  function draw(){
+    g.clearRect(0,0,cv.width,cv.height);
+    // food
+    g.font=`${CELL*0.9}px serif`;g.textAlign='center';g.textBaseline='middle';
+    g.fillText(foodEmoji,food.x*CELL+CELL/2,food.y*CELL+CELL/2);
+    // body
+    snake.forEach((s,i)=>{
+      if(i===0){
+        if(headReady){
+          g.save();
+          g.beginPath();
+          g.arc(s.x*CELL+CELL/2,s.y*CELL+CELL/2,CELL/2,0,Math.PI*2);
+          g.closePath();g.clip();
+          g.drawImage(headImg,s.x*CELL,s.y*CELL,CELL,CELL);
+          g.restore();
+        }else{
+          g.font=`${CELL}px serif`;
+          g.fillText('😋',s.x*CELL+CELL/2,s.y*CELL+CELL/2);
+        }
+      }else{
+        g.fillStyle=i%2?'#ec9ec7':'#d98cc0';
+        g.beginPath();
+        g.arc(s.x*CELL+CELL/2,s.y*CELL+CELL/2,CELL/2-1,0,Math.PI*2);
+        g.fill();
+      }
+    });
+  }
+  function step(){
+    dir=nextDir;
+    const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+    // wall collision
+    if(head.x<0||head.x>=GRID||head.y<0||head.y>=GRID)return gameOver();
+    // self collision
+    if(snake.some(s=>s.x===head.x&&s.y===head.y))return gameOver();
+    snake.unshift(head);
+    if(head.x===food.x&&head.y===food.y){
+      score++;document.getElementById('game-score').textContent='Score: '+score;
+      placeFood();
+      if(typeof burst==='function')burst(0.25,{left:cv.getBoundingClientRect().left+head.x*CELL,top:cv.getBoundingClientRect().top+head.y*CELL,width:CELL,height:CELL});
+    }else{snake.pop();}
+    draw();
+  }
+  function gameOver(){
+    running=false;clearInterval(loopId);
+    document.getElementById('final-score').textContent=score;
+    document.getElementById('go-msg').innerHTML=score>=10
+      ? `Whoa, ${score} treats! You\'re unstoppable 🍰`
+      : `Yum! You ate ${score} treats 🍦`;
+    document.getElementById('game-over').style.display='flex';
+  }
+  function start(){
+    reset();running=true;draw();
+    document.getElementById('start-btn').style.display='none';
+    document.getElementById('game-over').style.display='none';
+    clearInterval(loopId);loopId=setInterval(step,160);
+  }
+  function setDir(d){
+    if(!running)return;
+    if(d==='up'&&dir.y===0)nextDir={x:0,y:-1};
+    if(d==='down'&&dir.y===0)nextDir={x:0,y:1};
+    if(d==='left'&&dir.x===0)nextDir={x:-1,y:0};
+    if(d==='right'&&dir.x===0)nextDir={x:1,y:0};
+  }
+  document.getElementById('start-btn').onclick=start;
+  document.getElementById('restart-btn').onclick=start;
+  document.querySelectorAll('.game-controls button').forEach(b=>{
+    b.onclick=()=>setDir(b.dataset.dir);
+  });
+  document.addEventListener('keydown',e=>{
+    const k={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}[e.key];
+    if(k){e.preventDefault();setDir(k);}
+  });
+  // swipe controls on canvas
+  let tsx,tsy;
+  cv.addEventListener('touchstart',e=>{tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;},{passive:true});
+  cv.addEventListener('touchend',e=>{
+    if(tsx==null)return;
+    const dx=e.changedTouches[0].clientX-tsx,dy=e.changedTouches[0].clientY-tsy;
+    if(Math.abs(dx)>Math.abs(dy)){setDir(dx>0?'right':'left');}
+    else{setDir(dy>0?'down':'up');}
+    tsx=tsy=null;
+  },{passive:true});
+  reset();draw();
+})();
 const WKEY='aqilah-birthday-wishes';
 const cards=document.getElementById('wish-cards');
 const status=document.getElementById('wish-status');
